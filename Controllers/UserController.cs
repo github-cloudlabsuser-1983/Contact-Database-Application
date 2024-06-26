@@ -8,11 +8,18 @@ namespace CRUD_application_2.Controllers
     {
         public static System.Collections.Generic.List<User> userlist = new System.Collections.Generic.List<User>();
         // GET: User
-        public ActionResult Index()
+        public ActionResult Index(string searchName)
         {
-            return View(userlist);
+            var filteredUsers = userlist;
+
+            if (!string.IsNullOrEmpty(searchName))
+            {
+                filteredUsers = userlist.Where(u => u.Name.ToLower().Contains(searchName.ToLower())).ToList();
+            }
+
+            return View(filteredUsers);
         }
- 
+
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
